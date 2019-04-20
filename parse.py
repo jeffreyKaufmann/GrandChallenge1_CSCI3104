@@ -1,3 +1,4 @@
+#FOR REFRENCE COMMAND TO TURN AN FQ TO AN FA: sed '/^@/!d;s//>/;N' FQ INPUT > FA OUTPUT
 def parsingFunc(pathToData):
 	#Create a list of 500 Nones for GENOMES
 	seqNumeric = [None] * 500
