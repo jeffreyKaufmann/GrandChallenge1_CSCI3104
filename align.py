@@ -228,6 +228,29 @@ def alignReads(allReads, sortedMatches):
 def contigFilter(contigs):
     return list(filter(lambda x: x != None, contigs))
 
+def getN50(contigs):
+    n_contigs = len(contigs)
+    lengths = [None]*n_contigs
+    for idx, contig in enumerate(contigs):
+        lengths[idx] =  len(contig['contig'])
+    lengths.sort(reverse=True)
+
+    halfLength = sum(lengths)/2
+    n = 0
+    i=0
+    while n < halfLength:
+        n += lengths[i]
+        i += 1
+    return i
+
+def getRawContigs(contigs):
+    n_contigs = len(contigs)
+    rawContigs = [None]*n_contigs
+    for i in range(n_contigs):
+        rawContigs[i] = contigs[i]['contig']
+    return rawContigs
+
+
 
 def align(allReads,wl=7):
     toWord = getToWordArray(wl)
@@ -259,8 +282,14 @@ def align(allReads,wl=7):
     print("Aligning reads...")
     contigs = alignReads(allReads, allMatches)
     print(time.time() - start)
-    print(contigs)
 
-    print("Finishing up...")
+    print("Filtering Contigs...")
     contigs = contigFilter(contigs)
-    return contigs
+
+    print("Getting N50...")
+    n50 = getN50(contigs)
+
+    print("Getting Raw Contigs...")
+    rawContigs = getRawContigs(contigs)
+    pdb.set_trace()
+    return (rawContigs, n50)
