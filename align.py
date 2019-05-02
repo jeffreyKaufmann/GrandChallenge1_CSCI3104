@@ -291,5 +291,5 @@ def align(allReads,wl=7):
 
     print("Getting Raw Contigs...")
     rawContigs = getRawContigs(contigs)
-    pdb.set_trace()
+
     return (rawContigs, n50)
